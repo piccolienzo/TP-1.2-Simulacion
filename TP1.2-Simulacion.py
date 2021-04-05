@@ -6,7 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
-#jugadas
+
 
 
 def main():
@@ -18,31 +18,36 @@ def main():
     
     jugada = valid_input(1,7,"Que tipo de jugada realizará?\n1. Pleno\n2. Docenas\n3. Filas\n4. Rojo\n5. Negro\n6. Par\n7. Impar","Error: Seleccione jugada válida")
 
-    capital_jugador-=ficha 
+    capital_jugador-=ficha
+
     if jugada == 1:
         apuesta = valid_input(0,36,"Ingrese jugada al pleno","Error: Ingrese una opcion valida de ruleta")
-        jugar(ficha,[apuesta],2,capital_jugador)
+        jugar(ficha,[apuesta],36,capital_jugador)
     
     elif jugada == 2:
-        apuesta = valid_input(1,3,"Ingrese docena a apostar (1,2,3)","Error: Ingrese una opcion valida de ruleta")
-        jugar(ficha,[docenas[apuesta]],2,capital_jugador)
+        apuesta = valid_input(1,3,"Ingrese docena a apostar [1,2,3]","Error: Ingrese una opcion valida de ruleta")
+        jugar(ficha,[docenas[apuesta]],3,capital_jugador)
     
     elif jugada == 3:
-        apuesta = valid_input(1,3,"Ingrese filas a apostar (1,2,3)","Error: Ingrese una opcion valida de ruleta")
-        jugar(ficha,[filas[apuesta]],2,capital_jugador)
+        apuesta = valid_input(1,3,"Ingrese filas a apostar [1,2,3]","Error: Ingrese una opcion valida de ruleta")
+        jugar(ficha,[filas[apuesta]],3,capital_jugador)
     
     elif jugada == 4:
         print("Usted aposto a ROJO")
         jugar(ficha,rojo,2,capital_jugador)
+
     elif jugada == 5:
         print("Usted aposto a NEGRO")
         jugar(ficha,negro,2,capital_jugador)
+
     elif jugada == 6:
         print("Usted aposto a PAR")
         jugar(ficha,pares,2,capital_jugador)
+
     elif jugada == 7:
         print("Usted aposto a IMPAR")
         jugar(ficha,impares,2,capital_jugador)
+
     else:
         print('error')
 
