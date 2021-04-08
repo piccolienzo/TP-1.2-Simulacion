@@ -16,7 +16,7 @@ def main():
     global capital_caja
 
     
-    capital_jugador = int(valid_input(0,10000,"Con cuanto inicial dinero desea jugar? ","Error: Ingrese una opcion valida "))
+    capital_jugador = int(valid_input(500,10000,"Con cuanto inicial dinero desea jugar? ","Error: Ingrese una opcion valida (500 a 10000) "))
     estrategia = int(valid_input(1,2,"Que estrategia desea jugar 1- D'Alembert 2-Martin Gala ","Error: Ingrese una estrategia valida "))
     callback = 0
     if(estrategia == 1):
@@ -158,14 +158,14 @@ def plotVars():
 
     plt.ylim(min(flujo_caja),max(flujo_caja))
     plt.ticklabel_format(useOffset=False, style='plain')
-    #plt.savefig("MEDIA_"+str(SIZE)+"_TIRADAS"+str(EXT),bbox_inches='tight')
+    plt.savefig("FLUJO_CAJA"+str(EXT),bbox_inches='tight')
     plt.show()
     plt.close()
 
 
     plt.figure(figsize=(18,10))
-    plt.plot(flujo_caja) 
-    plt.title("Flujo Caja")
+    plt.plot(flujo_jugador) 
+    plt.title("Dinero del jugador")
         
     #blue_patch = mpatches.Patch(color='blue', label='Promedio de la muestra')
     #orange_patch = mpatches.Patch(color='orange', label='Promedio esperado')
@@ -174,9 +174,12 @@ def plotVars():
     plt.ylabel('Dinero en jugador')    
 
     plt.ticklabel_format(useOffset=False, style='plain')
-    #plt.savefig("MEDIA_"+str(SIZE)+"_TIRADAS"+str(EXT),bbox_inches='tight')
+    plt.savefig("DINERO_JUGADOR"+str(EXT),bbox_inches='tight')
     plt.show()
     plt.close()
+
+
+
 
 MIN=0
 MAX=36
