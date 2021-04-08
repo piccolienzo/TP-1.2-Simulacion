@@ -9,11 +9,12 @@ import matplotlib.patches as mpatches
 
 
 
-def main():  
+def juego():  
     
     global capital_jugador
-    global contador 
+    
     global capital_caja
+    global ganadas
 
     
     capital_jugador = int(valid_input(500,10000,"Con cuanto inicial dinero desea jugar? ","Error: Ingrese una opcion valida (500 a 10000) "))
@@ -35,33 +36,33 @@ def main():
     if jugada == 1:
         apuesta = valid_input(0,36,"Ingrese jugada al pleno","Error: Ingrese una opcion valida de ruleta")
        
-        jugar(ficha, ficha, [apuesta], 36, callback)
+        jugar(ficha, ficha, [apuesta], 36, callback,0)
     
     elif jugada == 2:
         apuesta = valid_input(1,3,"Ingrese docena a apostar [1,2,3]","Error: Ingrese una opcion valida de ruleta")
         
-        jugar(ficha, ficha, [docenas[apuesta]], 3, callback)
+        jugar(ficha, ficha, [docenas[apuesta]], 3, callback,0)
     
     elif jugada == 3:
         apuesta = valid_input(1,3,"Ingrese filas a apostar [1,2,3]","Error: Ingrese una opcion valida de ruleta")     
-        jugar(ficha, ficha, [filas[apuesta]], 3, callback)
+        jugar(ficha, ficha, [filas[apuesta]], 3, callback,0)
     
     elif jugada == 4:
         print("Usted aposto a ROJO")
-        jugar(ficha, ficha, rojos, 2, callback)
+        jugar(ficha, ficha, rojos, 2, callback,0)
 
     elif jugada == 5:
         print("Usted aposto a NEGRO")
-        jugar(ficha, ficha, negros, 2, callback)
+        jugar(ficha, ficha, negros, 2, callback,0)
 
     elif jugada == 6:
         print("Usted aposto a PAR")
         
-        jugar(ficha, ficha, pares, 2, callback)
+        jugar(ficha, ficha, pares, 2, callback,0)
 
     elif jugada == 7:
         print("Usted aposto a IMPAR")
-        jugar(ficha, ficha, impares, 2, callback)
+        jugar(ficha, ficha, impares, 2, callback,0)
 
     else:
         print('error')
@@ -77,15 +78,16 @@ def martin_gala(_ficha,apuesta):
     return var
 
 
-def jugar(_apostado,_ficha, _apuesta, _multiplicador, estrategia): 
+def jugar(_apostado,_ficha, _apuesta, _multiplicador, estrategia, contador): 
     global capital_jugador
-    global contador
     global capital_caja
+    global ganadas
     #Ficha: valor de la ficha:5 #Apuesta: numeros donde debe salir:[5,40,30] #capital: 500 
     
     nro_ruleta = getRandomInt()
     print("capital caja antes de jugar: $"+str(capital_caja))
     gano = False
+    contador += 1
     
     if (capital_jugador >= _apostado and capital_caja >= _apostado):
         #puede jugar
@@ -107,22 +109,22 @@ def jugar(_apostado,_ficha, _apuesta, _multiplicador, estrategia):
             capital_caja-=ganancia
             #suponemos que no cambia la apuesta
             print("gano: $"+str(ganancia)+" capital actual: $"+str(capital_jugador))
-            jugar(_ficha,_ficha,_apuesta,_multiplicador,estrategia)
-            ganadas.append(1)
-            jugadas_f_relativas.append((len(ganadas)/ len(flujo_jugador)))
+            jugar(_ficha,_ficha,_apuesta,_multiplicador,estrategia,contador)
+            
+            
 
         else:
             #perdio            
             print("perdio: $"+str(_apostado)+" capital actual: $"+str(capital_jugador))
-            jugar(estrategia(_ficha,_apostado),_ficha,_apuesta,_multiplicador,estrategia)
+            jugar(estrategia(_ficha,_apostado),_ficha,_apuesta,_multiplicador,estrategia,contador)
             
-            jugadas_f_relativas.append((len(ganadas)/ len(flujo_jugador)))
+           
 
 
     else:
         #no puede juegar mas
         print("capital final: " + str(capital_jugador))
-        print("perdiste en "+ str(contador)+ " veces paaaaa")
+        print("perdiste en "+ str(contador)+ " veces")
         print("capital caja: $"+str(capital_caja))
 
     return gano
@@ -180,23 +182,7 @@ def plotVars():
     plt.show()
     plt.close()
 
-    #Frecuencias Relativas
-    for index in range(len(jugadas_f_relativas)):
-        plt.bar(index,jugadas_f_relativas[index])
-    
-    print(jugadas_f_relativas)
-    #plt.xticks((jugadas_f_relativas))
-    plt.yticks([1])
-    
-    plt.title("")
-    plt.xlabel("Números")
-    plt.ylabel("Frecuencia")
-    
-    #plt.savefig("FRECUENCIAS_RELATIVAS_"+str(SIZE)+"_TIRADAS"+str(EXT),bbox_inches='tight')
-    plt.show()
-    plt.close()
-
-
+   
 
 
 MIN=0
@@ -219,16 +205,16 @@ flujos_jugador = []
 
 flujo_caja = []
 flujo_jugador = []
-ganadas = []
-jugadas_f_relativas = []
+
+
 
 
 ilimitado = 1
-contador = 0
+
 capital_caja = 1000000
 capital_jugador = 0
 EXT = ".svg"
-main()
+juego()
 plotVars()
 
 
