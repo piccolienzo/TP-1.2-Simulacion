@@ -90,9 +90,15 @@ def jugar(_apostado,_ficha, _apuesta, _multiplicador, estrategia):
     if (capital_jugador >= _apostado and capital_caja >= _apostado):
         #puede jugar
         print("en juego hay $"+str(_apostado))
-        contador += 1
+        
+        flujo_caja.append(capital_caja)
+        flujo_jugador.append(capital_jugador)
+
         capital_jugador -=  _apostado
         capital_caja += _apostado
+
+        
+
         print("saldo actual:"+str(capital_jugador))
         if nro_ruleta in _apuesta:
             #ganó
@@ -102,11 +108,13 @@ def jugar(_apostado,_ficha, _apuesta, _multiplicador, estrategia):
             #suponemos que no cambia la apuesta
             print("gano: $"+str(ganancia)+" capital actual: $"+str(capital_jugador))
             jugar(_ficha,_ficha,_apuesta,_multiplicador,estrategia)
+            ganadas.append(1)
 
         else:
             #perdio            
             print("perdio: $"+str(_apostado)+" capital actual: $"+str(capital_jugador))
             jugar(estrategia(_ficha,_apostado),_ficha,_apuesta,_multiplicador,estrategia)
+            ganadas.append(0)
 
 
     else:
@@ -136,6 +144,40 @@ def getRandomInt():
     return number
    
 
+def plotVars():
+    
+    plt.figure(figsize=(18,10))
+    plt.plot(flujo_caja) 
+    plt.title("Flujo Caja")
+        
+    #blue_patch = mpatches.Patch(color='blue', label='Promedio de la muestra')
+    #orange_patch = mpatches.Patch(color='orange', label='Promedio esperado')
+    #plt.legend(handles=[blue_patch,orange_patch])
+    plt.xlabel('Jugada')
+    plt.ylabel('Dinero en caja')
+
+    plt.ylim(min(flujo_caja),max(flujo_caja))
+    plt.ticklabel_format(useOffset=False, style='plain')
+    #plt.savefig("MEDIA_"+str(SIZE)+"_TIRADAS"+str(EXT),bbox_inches='tight')
+    plt.show()
+    plt.close()
+
+
+    plt.figure(figsize=(18,10))
+    plt.plot(flujo_caja) 
+    plt.title("Flujo Caja")
+        
+    #blue_patch = mpatches.Patch(color='blue', label='Promedio de la muestra')
+    #orange_patch = mpatches.Patch(color='orange', label='Promedio esperado')
+    #plt.legend(handles=[blue_patch,orange_patch])
+    plt.xlabel('Tirada')
+    plt.ylabel('Dinero en jugador')    
+
+    plt.ticklabel_format(useOffset=False, style='plain')
+    #plt.savefig("MEDIA_"+str(SIZE)+"_TIRADAS"+str(EXT),bbox_inches='tight')
+    plt.show()
+    plt.close()
+
 MIN=0
 MAX=36
 
@@ -150,7 +192,21 @@ impares = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35]
 
 fichas = {1:5,2:10,3:25,4:50,5:100}
 
+flujos_de_caja = []
+flujos_jugador = []
+
+
+flujo_caja = []
+flujo_jugador = []
+ganadas = []
+
+
+ilimitado = 1
 contador = 0
 capital_caja = 1000000
 capital_jugador = 0
+EXT = ".svg"
 main()
+plotVars()
+
+
