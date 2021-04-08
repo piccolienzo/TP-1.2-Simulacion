@@ -109,12 +109,14 @@ def jugar(_apostado,_ficha, _apuesta, _multiplicador, estrategia):
             print("gano: $"+str(ganancia)+" capital actual: $"+str(capital_jugador))
             jugar(_ficha,_ficha,_apuesta,_multiplicador,estrategia)
             ganadas.append(1)
+            jugadas_f_relativas.append((len(ganadas)/ len(flujo_jugador)))
 
         else:
             #perdio            
             print("perdio: $"+str(_apostado)+" capital actual: $"+str(capital_jugador))
             jugar(estrategia(_ficha,_apostado),_ficha,_apuesta,_multiplicador,estrategia)
-            ganadas.append(0)
+            
+            jugadas_f_relativas.append((len(ganadas)/ len(flujo_jugador)))
 
 
     else:
@@ -146,6 +148,7 @@ def getRandomInt():
 
 def plotVars():
     
+    #FLUJO DE CAJA
     plt.figure(figsize=(18,10))
     plt.plot(flujo_caja) 
     plt.title("Flujo Caja")
@@ -163,18 +166,33 @@ def plotVars():
     plt.close()
 
 
+
+    #DINERO JUGADOR
     plt.figure(figsize=(18,10))
     plt.plot(flujo_jugador) 
     plt.title("Dinero del jugador")
-        
-    #blue_patch = mpatches.Patch(color='blue', label='Promedio de la muestra')
-    #orange_patch = mpatches.Patch(color='orange', label='Promedio esperado')
-    #plt.legend(handles=[blue_patch,orange_patch])
+     
     plt.xlabel('Tirada')
     plt.ylabel('Dinero en jugador')    
 
     plt.ticklabel_format(useOffset=False, style='plain')
     plt.savefig("DINERO_JUGADOR"+str(EXT),bbox_inches='tight')
+    plt.show()
+    plt.close()
+
+    #Frecuencias Relativas
+    for index in range(len(jugadas_f_relativas)):
+        plt.bar(index,jugadas_f_relativas[index])
+    
+    print(jugadas_f_relativas)
+    #plt.xticks((jugadas_f_relativas))
+    plt.yticks([1])
+    
+    plt.title("")
+    plt.xlabel("Números")
+    plt.ylabel("Frecuencia")
+    
+    #plt.savefig("FRECUENCIAS_RELATIVAS_"+str(SIZE)+"_TIRADAS"+str(EXT),bbox_inches='tight')
     plt.show()
     plt.close()
 
@@ -202,6 +220,7 @@ flujos_jugador = []
 flujo_caja = []
 flujo_jugador = []
 ganadas = []
+jugadas_f_relativas = []
 
 
 ilimitado = 1
@@ -211,5 +230,6 @@ capital_jugador = 0
 EXT = ".svg"
 main()
 plotVars()
+
 
 
