@@ -83,13 +83,14 @@ def jugar(_apostado,_ficha, _apuesta, _multiplicador, estrategia, contador):
     global capital_caja
     global ganadas
     #Ficha: valor de la ficha:5 #Apuesta: numeros donde debe salir:[5,40,30] #capital: 500 
-    
+    contador += 1
     nro_ruleta = getRandomInt()
     print("capital caja antes de jugar: $"+str(capital_caja))
     gano = False
-    contador += 1
+   
     
-    if (capital_jugador >= _apostado and capital_caja >= _apostado):
+
+    if ((capital_jugador >= _apostado and capital_caja >= _apostado) != (infinito == True and contador < infi_limit)):
         #puede jugar
         print("en juego hay $"+str(_apostado))
         
@@ -99,8 +100,6 @@ def jugar(_apostado,_ficha, _apuesta, _multiplicador, estrategia, contador):
         capital_jugador -=  _apostado
         capital_caja += _apostado
 
-        
-
         print("saldo actual:"+str(capital_jugador))
         if nro_ruleta in _apuesta:
             #ganó
@@ -109,18 +108,18 @@ def jugar(_apostado,_ficha, _apuesta, _multiplicador, estrategia, contador):
             capital_caja-=ganancia
             #suponemos que no cambia la apuesta
             print("gano: $"+str(ganancia)+" capital actual: $"+str(capital_jugador))
+            ganadas.append(1)
+            jugadas.append(contador)
             jugar(_ficha,_ficha,_apuesta,_multiplicador,estrategia,contador)
-            
-            
-
+                    
         else:
             #perdio            
             print("perdio: $"+str(_apostado)+" capital actual: $"+str(capital_jugador))
+
+            ganadas.append(0)
+            jugadas.append(contador)
             jugar(estrategia(_ficha,_apostado),_ficha,_apuesta,_multiplicador,estrategia,contador)
             
-           
-
-
     else:
         #no puede juegar mas
         print("capital final: " + str(capital_jugador))
@@ -182,11 +181,34 @@ def plotVars():
     plt.show()
     plt.close()
 
+
+    frec_relativa = []
+    cont = 0
+    for index in range(len(jugadas)):
+        if ganadas[index] == 1:
+            cont += 1
+            frec_relativa.append(cont/index)
+        else:
+            frec_relativa.append(0)
+    
+    plt.figure(figsize=(18,10))
+    
+    plt.bar(jugadas,frec_relativa)
+    
+    plt.title("Frecuencias relativas para "+str(len(jugadas))+ " tiradas")
+    plt.xlabel("Jugadas")
+    plt.ylabel("Frecuencia relativa ")
+    
+    plt.savefig("FRECUENCIAS_RELATIVAS_"+str(EXT),bbox_inches='tight')
+    plt.show()
+    plt.close()
+
+
    
 
+MIN = 0
+MAX = 36
 
-MIN=0
-MAX=36
 
 plenos =[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36]
 docenas = [[0],[1,2,3,4,5,6,7,8,9,10,11,12],[13,14,15,16,17,18,19,20,21,22,23,24],[25,26,27,28,29,30,31,32,33,34,35,36]]
@@ -206,14 +228,17 @@ flujos_jugador = []
 flujo_caja = []
 flujo_jugador = []
 
+ganadas = []
+jugadas = []
 
-
-
-ilimitado = 1
+infi_limit = 200
+infinito = True
 
 capital_caja = 1000000
 capital_jugador = 0
 EXT = ".svg"
+
+
 juego()
 plotVars()
 
