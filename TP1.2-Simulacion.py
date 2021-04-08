@@ -88,9 +88,9 @@ def jugar(_apostado,_ficha, _apuesta, _multiplicador, estrategia, contador):
     print("capital caja antes de jugar: $"+str(capital_caja))
     gano = False
    
-    
+    ##Para infinito (infinito == True and contador < infi_limit)
 
-    if ((capital_jugador >= _apostado and capital_caja >= _apostado) != (infinito == True and contador < infi_limit)):
+    if ((capital_jugador >= _apostado and capital_caja >= _apostado)):
         #puede jugar
         print("en juego hay $"+str(_apostado))
         
