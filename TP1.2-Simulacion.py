@@ -11,8 +11,7 @@ import matplotlib.patches as mpatches
 
 def juego():  
     
-    global capital_jugador
-    
+    global capital_jugador    
     global capital_caja
     global ganadas
 
@@ -24,23 +23,15 @@ def juego():
         callback = d_alembert
     else:
         callback = martin_gala
-
-    ficha = valid_input(1,5,"Que ficha desea jugar?: "+ str(fichas), "Error: Ingrese valor de ficha valido")
-    
-    ficha = fichas[ficha]
-    
-    
-    jugada = valid_input(1,7,"Que tipo de jugada realizará?\n1. Pleno\n2. Docenas\n3. Filas\n4. Rojo\n5. Negro\n6. Par\n7. Impar","Error: Seleccione jugada válida")
-
-    
+    ficha = valid_input(1,5,"Que ficha desea jugar?: "+ str(fichas), "Error: Ingrese valor de ficha valido")  
+    ficha = fichas[ficha]    
+    jugada = valid_input(1,7,"Que tipo de jugada realizará?\n1. Pleno\n2. Docenas\n3. Filas\n4. Rojo\n5. Negro\n6. Par\n7. Impar","Error: Seleccione jugada válida") 
     if jugada == 1:
-        apuesta = valid_input(0,36,"Ingrese jugada al pleno","Error: Ingrese una opcion valida de ruleta")
-       
+        apuesta = valid_input(0,36,"Ingrese jugada al pleno","Error: Ingrese una opcion valida de ruleta")    
         jugar(ficha, ficha, [apuesta], 36, callback,0)
     
     elif jugada == 2:
-        apuesta = valid_input(1,3,"Ingrese docena a apostar [1,2,3]","Error: Ingrese una opcion valida de ruleta")
-        
+        apuesta = valid_input(1,3,"Ingrese docena a apostar [1,2,3]","Error: Ingrese una opcion valida de ruleta")     
         jugar(ficha, ficha, docenas[apuesta], 3, callback,0)
     
     elif jugada == 3:
@@ -56,8 +47,7 @@ def juego():
         jugar(ficha, ficha, negros, 2, callback,0)
 
     elif jugada == 6:
-        print("Usted aposto a PAR")
-        
+        print("Usted aposto a PAR")      
         jugar(ficha, ficha, pares, 2, callback,0)
 
     elif jugada == 7:
@@ -233,7 +223,7 @@ infinito = True
 
 capital_caja = 1000000
 capital_jugador = 0
-EXT = "DAlembert_Pleno_Apendice_2.svg"
+EXT = ".svg"
 
 
 juego()
