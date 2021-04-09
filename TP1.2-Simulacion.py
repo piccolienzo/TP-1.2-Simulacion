@@ -41,11 +41,11 @@ def juego():
     elif jugada == 2:
         apuesta = valid_input(1,3,"Ingrese docena a apostar [1,2,3]","Error: Ingrese una opcion valida de ruleta")
         
-        jugar(ficha, ficha, [docenas[apuesta]], 3, callback,0)
+        jugar(ficha, ficha, docenas[apuesta], 3, callback,0)
     
     elif jugada == 3:
         apuesta = valid_input(1,3,"Ingrese filas a apostar [1,2,3]","Error: Ingrese una opcion valida de ruleta")     
-        jugar(ficha, ficha, [filas[apuesta]], 3, callback,0)
+        jugar(ficha, ficha, filas[apuesta], 3, callback,0)
     
     elif jugada == 4:
         print("Usted aposto a ROJO")
@@ -221,9 +221,6 @@ impares = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35]
 
 fichas = {1:5,2:10,3:25,4:50,5:100}
 
-flujos_de_caja = []
-flujos_jugador = []
-
 
 flujo_caja = []
 flujo_jugador = []
@@ -236,11 +233,13 @@ infinito = True
 
 capital_caja = 1000000
 capital_jugador = 0
-EXT = ".svg"
+EXT = "DAlembert_Pleno_Apendice_2.svg"
 
 
 juego()
 plotVars()
+
+
 
 
 
